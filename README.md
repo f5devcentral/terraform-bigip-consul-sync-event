@@ -34,7 +34,3 @@ terraform-bigip-app-consul-sync-nia
 
 This is module which combines multiple resources, it combines the FAST template deployment and BIG-IP event service discovery of pools together.
 
-Here are the steps
-
-- git clone the repository
- 
