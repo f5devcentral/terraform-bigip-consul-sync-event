@@ -20,7 +20,8 @@ terraform_provider "bigip" {
 task {
   name = "AS3"
   description = "BIG-IP example"
-  source = "terraform-bigip-consul-sync-event"
+  source = "../"
   providers = ["bigip"]
   services = ["nginx"]
+  variable_files = ["terraform.tfvars"]
 }

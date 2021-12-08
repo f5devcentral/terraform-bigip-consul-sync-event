@@ -10,16 +10,16 @@ terraform {
 
 data "archive_file" "template_zip" {
   type        = "zip"
-  source_file = "/Users/shitole/terraform-bigip-consul-sync-event/ConsulWebinar.yaml"
-  output_path = "/Users/shitole/terraform-bigip-consul-sync-event/ConsulWebinar.zip"
+  source_file = "${path.module}/template/ConsulWebinar.yaml"
+  output_path = "${path.module}/template/ConsulWebinar.zip"
 }
 
 # deploy fast template
 
 resource "bigip_fast_template" "consul-webinar" {
   name = "ConsulWebinar"
-  source = "/Users/shitole/terraform-bigip-consul-sync-event/ConsulWebinar.zip"
-  md5_hash = filemd5("/Users/shitole/terraform-bigip-consul-sync-event/ConsulWebinar.zip")
+  source = "${path.module}/template/ConsulWebinar.zip"
+  md5_hash = filemd5("${path.module}/template/ConsulWebinar.zip")
   depends_on = [data.archive_file.template_zip]
 }
 
