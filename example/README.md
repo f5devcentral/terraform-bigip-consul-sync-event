@@ -1,27 +1,21 @@
 # Network Infrastructure Automation (NIA)
 
-In this directory you will see an example of using [Network Infrastructure Automation (NIA)](https://www.consul.io/docs/nia) to "push" a configuration to the BIG-IP.
+In this module you will see an example of using [Network Infrastructure Automation (NIA)](https://www.consul.io/docs/nia) to "push" a configuration to the BIG-IP.
+We will use the utility `consul-terraform-sync` that will communicate with the Consul service.  When a change is detected it will push a configuration change to the BIG-IP.  
 
-In the "as3" directory you saw an example of the BIG-IP "pulling" the configuration from Consul.  This requires that the BIG-IP is able to access the Consul service and it is responsible for updating the configuration.
+## Running this module
+We assume this is brown field deployment, your BIG-IP already has FAST templated installedand now you need to configure the config.hcl file as per your requirement.
 
-In this directory we will use the utility `consul-terraform-sync` that will communicate with the Consul service.  When a change is detected it will push a configuration change to the BIG-IP.  
-
-## Running this example
-
-This assumes that you have already run the existing demonstration of running "terraform apply" in both the "terraform" directory.
-
-Start in the "fast" directory.  Run the command:
+copy example config hcl file as shown
 
 ```
-$ terraform apply
+cp config.hcl.example config.hcl
+
 ```
-The "fast" directory will upload a FAST template that will configure the BIG-IP to use Event-Driven Service Discovery.
+Make sure you have provided the details for bigip address, username, password using terraform.tfvars file or exporting variables values.
 
-This will update the configuration of the BIG-IP to no longer communicate with Consul.
 
-Instead it will expect that it will be receiving updates from `consul-terraform-sync`.
-
-In the "nia" directory run 
+In the "example" directory run 
 ```
 consul-terraform-sync -config-file config.hcl 
 ```
@@ -29,26 +23,74 @@ You will see output that indicates that it has updated the BIG-IP configuration.
 
 Example output
 ```
+consul-terraform-sync -config-file config.hcl
+{
+  "terraform_version": "1.0.11",
+  "platform": "darwin_amd64",
+  "provider_selections": {},
+  "terraform_outdated": false
+}
 Initializing modules...
 
 Initializing the backend...
 
 Initializing provider plugins...
-- Using previously-installed f5networks/bigip v1.5.0
+- Finding f5networks/bigip versions matching "~> 1.11.1"...
+- Installing f5networks/bigip v1.11.1...
+- Installed f5networks/bigip v1.11.1 (signed by a HashiCorp partner, key ID 0F284A6527D73A63)
+
+Partner and community providers are signed by their developers.
+If you'd like to know more about provider signing, you can read about it here:
+https://www.terraform.io/docs/cli/plugins/signing.html
+
+Terraform has created a lock file .terraform.lock.hcl to record the provider
+selections it made above. Include this file in your version control repository
+so that Terraform can guarantee to make the same selections by default when
+you run "terraform init" in the future.
 
 Terraform has been successfully initialized!
-Workspace "AS3" already exists
-module.AS3.bigip_event_service_discovery.event_pools["nginx"]: Refreshing state... [id=~Consul_SD~Nginx~nginx_pool]
+Created and switched to workspace "AS3"!
 
-Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
-module.AS3.bigip_event_service_discovery.event_pools["nginx"]: Refreshing state... [id=~Consul_SD~Nginx~nginx_pool]
-module.AS3.bigip_event_service_discovery.event_pools["nginx"]: Modifying... [id=~Consul_SD~Nginx~nginx_pool]
-module.AS3.bigip_event_service_discovery.event_pools["nginx"]: Modifications complete after 1s [id=~Consul_SD~Nginx~nginx_pool]
+You're now on a new, empty workspace. Workspaces isolate their state,
+so if you run "terraform plan" Terraform will not see any existing state
+for this configuration.
+{
+  "format_version": "0.1",
+  "valid": true,
+  "error_count": 0,
+  "warning_count": 0,
+  "diagnostics": []
+}
 
-Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
-module.AS3.bigip_event_service_discovery.event_pools["nginx"]: Refreshing state... [id=~Consul_SD~Nginx~nginx_pool]
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
 
-Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
+Terraform will perform the following actions:
+
+  # module.AS3.bigip_event_service_discovery.event_pools["nginx"] will be created
+  + resource "bigip_event_service_discovery" "event_pools" {
+      + id     = (known after apply)
+      + taskid = "~Consul_SD~Nginx~nginx_pool"
+
+      + node {
+          + id   = "10.0.0.234"
+          + ip   = "10.0.0.234"
+          + port = 80
+        }
+      + node {
+          + id   = "10.0.0.5"
+          + ip   = "10.0.0.5"
+          + port = 80
+        }
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+module.AS3.bigip_event_service_discovery.event_pools["nginx"]: Creating...
+module.AS3.bigip_event_service_discovery.event_pools["nginx"]: Creation complete after 0s [id=~Consul_SD~Nginx~nginx_pool]
+
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+
 ```
 
 ## How this works
