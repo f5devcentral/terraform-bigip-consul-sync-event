@@ -1,5 +1,8 @@
 # BIG-IP Application Consul-Terraform-Sync with Service Events Module
 
+This is module which combines multiple resources, it combines the FAST te
+mplate deployment and BIG-IP event service discovery of pools together.
+Assumption is you have BIG-IP already deployed and now you want to use Consul_terraform_sync for automation. 
 This terraform module leverages consul-terraform-sync to create and update application services on BIG-IP based on registered services within Consul. Please open github issues with feature requests or bugs for further advancement.
 
 Please find more information about setting up your environment with **Consul Network Infrastructure Automation (NIA)** within its [Documentation Page](https://www.consul.io/docs/nia/tasks).
@@ -9,7 +12,6 @@ terraform-bigip-app-consul-sync-nia
 <p align="left">
 <img width="100%"   src="https://raw.githubusercontent.com/f5devcentral/terraform-bigip-app-consul-sync-nia/master/images/cts.drawio.png"> </a>
 </p>
-                                                                                                                                     
                                                                                                                                      
 ## Requirements
 
@@ -29,3 +31,10 @@ terraform-bigip-app-consul-sync-nia
 | bigip | ~> 1.3.2 |
 
 ## Setup / Notes
+
+This is module which combines multiple resources, it combines the FAST template deployment and BIG-IP event service discovery of pools together.
+
+Here are the steps
+
+- git clone the repository
+ 
