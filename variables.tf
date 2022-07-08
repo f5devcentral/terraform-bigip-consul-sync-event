@@ -20,12 +20,27 @@ variable "services" {
     })
   )
 }
-variable "address" {}
-variable "port" {}
-variable "username" {}
-variable "password" {}
+variable "address" {
+description = "Provide address of BIG-IP"
+}
+variable "port" {
+description = "BIG-IP Management port if its different than 443"
+}
+variable "username" {
+description = "BIG-IP username mostly its admin"
+}
+variable "password" {
+description = "BIG-IP Password"
+}
 variable "declaration" {
   default = "nginx.json"
 }
+variable "tenant" {
+description = "Name of the tenant"
+ default = "Consul_SD"
+}
+variable "app" {
 
-
+description = " Name of the App"
+ default = "Nginx"
+}

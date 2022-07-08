@@ -31,6 +31,7 @@ resource "bigip_fast_application" "nginx-webserver" {
       "app": "Nginx",
       "virtualAddress": "10.0.0.200",
       "virtualPort": 8080
+       "defpool": "nginx_pool"
 }
 EOF
   depends_on = [bigip_fast_template.consul-webinar]
@@ -54,7 +55,7 @@ locals {
 }
 resource "bigip_event_service_discovery" "event_pools" {
   for_each = local.service_ids
-  taskid   = "~Consul_SD~Nginx~${each.key}_pool"
+  taskid   = "~${var.tenant}~${var.app}~${each.key}_pool"
   dynamic "node" {
     for_each = local.grouped[each.key]
     content {

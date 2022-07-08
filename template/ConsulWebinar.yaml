@@ -7,6 +7,9 @@ definitions:
   app:
     title: Application
     description: give a unique name for this application
+  defpool:
+    title: pool defination
+    description: give a unique name for this application
   virtualAddress:
     title: Virtual Address
     description: IP addresses of virtual addresses (will create 80/443)
@@ -15,8 +18,6 @@ definitions:
     description: Port that will be used
     type: integer
 parameters:
-  uri: "http://10.0.0.100:8500"
-  service: "nginx"
   virtualAddress: 10.0.0.200
   virtualPort: 8080
   tenant: "Consul_SD"
@@ -42,13 +43,13 @@ template: |
                 "virtualAddresses": [
                     "{{virtualAddress}}"
                 ],
-                "pool": "nginx_pool",
+                "pool": "{{defpool}}",
                 "persistenceMethods": [],
                 "profileMultiplex": {
                 "bigip": "/Common/oneconnect"
               }
               },
-              "nginx_pool": {
+              "{{defpool}}": {
                 "class": "Pool",
                 "monitors": [
                     "http"
