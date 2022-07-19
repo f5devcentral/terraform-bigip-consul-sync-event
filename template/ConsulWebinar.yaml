@@ -22,6 +22,7 @@ parameters:
   virtualPort: 8080
   tenant: "Consul_SD"
   app: "Nginx"
+  defpool: "nginx_pool"
 template: |
   {
     "class": "AS3",
