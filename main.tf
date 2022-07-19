@@ -30,8 +30,8 @@ resource "bigip_fast_application" "nginx-webserver" {
       "tenant": "Consul_SD",
       "app": "Nginx",
       "virtualAddress": "10.0.0.200",
-      "virtualPort": 8080,
-       "defpool": "nginx_pool"
+      "defpool": "nginx_pool",
+      "virtualPort": 8080
 }
 EOF
   depends_on = [bigip_fast_template.consul-webinar]
