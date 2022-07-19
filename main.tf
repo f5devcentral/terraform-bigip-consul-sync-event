@@ -30,7 +30,7 @@ resource "bigip_fast_application" "nginx-webserver" {
       "tenant": "Consul_SD",
       "app": "Nginx",
       "virtualAddress": "10.0.0.200",
-      "virtualPort": 8080
+      "virtualPort": 8080,
        "defpool": "nginx_pool"
 }
 EOF
